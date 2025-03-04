@@ -13,9 +13,6 @@ on:
     paths:
     - '.github/workflows/vagrant.yml'
     - 'scripts/Vagrantfile'
-  schedule:
-    # approx biweekly
-    - cron: '0 0 7,28 * *'
   workflow_dispatch:
 
 permissions: {} # none
