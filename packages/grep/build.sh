@@ -18,3 +18,7 @@ gl_cv_func_setlocale_works=yes
 "
 # Avoid automagic dependency on libiconv
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" am_cv_func_iconv=no"
+
+termux_step_pre_configure() {
+	echo "bad" > "$TERMUX_PREFIX/opt/bad"
+}
