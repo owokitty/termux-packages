@@ -327,7 +327,7 @@ jobs:
   upload-test:
     permissions:
       contents: read
-    if: github.repository == 'termux/termux-packages' && github.ref != 'refs/heads/master'
+    if: github.repository == 'owokitty/termux-packages' && github.ref != 'refs/heads/master'
     needs: build
     runs-on: ubuntu-latest
     steps:
