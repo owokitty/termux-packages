@@ -189,7 +189,6 @@ jobs:
         if [[ "${#packages[@]}" -gt 0 ]]; then
           for pkg in "${packages[@]}"; do
             if grep -qFx "$pkg" ./scripts/big-pkgs.list; then
-              docker='false'
               break
             fi
           done
@@ -229,8 +228,10 @@ jobs:
       if: ${{ steps.build-info.outputs.docker-build == 'false' && steps.build-info.outputs.skip-building != 'true' }}
       run: |
         ./scripts/setup-ubuntu.sh
+        ./scripts/setup-android-sdk.sh
         sudo apt install ninja-build
         ./scripts/free-space.sh
+        sudo rm -rf /usr/local/lib/android
 
     - name: Build packages
       if: ${{ steps.build-info.outputs.skip-building != 'true' }}
@@ -249,7 +250,7 @@ jobs:
 
         if [[ "${#packages[@]}" -gt 0 ]]; then
           if [ "$DOCKER_BUILD" == 'false' ]; then
-            NDK="$ANDROID_NDK" ANDROID_HOME="$ANDROID_SDK_ROOT" ./build-package.sh -I -C -a "${{ matrix.target_arch }}" "${packages[@]}"
+            ./build-package.sh -I -C -a "${{ matrix.target_arch }}" "${packages[@]}"
           else
             ./scripts/run-docker.sh ./build-package.sh -I -C -a "${{ matrix.target_arch }}" "${packages[@]}"
           fi
