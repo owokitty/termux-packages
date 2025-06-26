@@ -185,7 +185,7 @@ jobs:
 
         echo "packages: ${packages[*]}"
 
-        docker='true'
+        docker='false'
         if [[ "${#packages[@]}" -gt 0 ]]; then
           for pkg in "${packages[@]}"; do
             if grep -qFx "$pkg" ./scripts/big-pkgs.list; then
